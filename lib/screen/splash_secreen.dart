@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mentor_a/screen/choice_screen.dart';
 import 'package:mentor_a/screen/welcome_screen.dart';
+import 'package:mentor_a/style/custom_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     _initializeVideo();
   }
 
@@ -52,11 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     bool isSetupDone = prefs.getBool('isProtected') ?? false;
 
-    // ALUR BARU:
-    // Jika sudah setup -> GuardianHomeScreen (New Main)
-    // Jika belum setup -> NewScreen (Welcome) -> Setup
     Widget targetScreen = isSetupDone
-        ? const WelcomeScreen()
+        ? const ChoiceScreen()
         : const WelcomeScreen();
 
     if (mounted) {
@@ -88,6 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.dispose();
   }
 
@@ -100,33 +102,43 @@ class _SplashScreenState extends State<SplashScreen> {
           // 1. Centered Content (Mascot + Title)
           Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (_controller.value.isInitialized)
+                if (_controller.value.isInitialized) ...{
                   SizedBox(
-                    // Increased size to 95% of screen width to make mascot look bigger
-                    width: MediaQuery.of(context).size.width * 0.95,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.width * 0.6,
                     child: AspectRatio(
                       aspectRatio: _controller.value.aspectRatio,
                       child: VideoPlayer(_controller),
                     ),
-                  )
-                else
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'MentorA',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
+                      color: CustomColor.textBlue,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    'Teman Belajar kamu',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w200,
+                      color: CustomColor.textBlue,
+                      letterSpacing: -0.25,
+                    ),
+                  ),
+                } else ...{
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.95,
                     height: MediaQuery.of(context).size.width * 0.95,
                   ),
-
-                const SizedBox(height: 30),
-                Text(
-                  'MentorA',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
-                    letterSpacing: -0.5,
-                  ),
-                ),
+                },
               ],
             ),
           ),

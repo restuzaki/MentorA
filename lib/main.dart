@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'MentorA',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF138066)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF3D7BD9)),
         useMaterial3: true,
         fontFamily: 'Poppins',
       ),
