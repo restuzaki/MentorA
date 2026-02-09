@@ -28,7 +28,6 @@ class ChoiceScreen extends StatelessWidget {
             ),
           ),
 
-          // Bagian Bawah (Teks dan Tombol)
           Expanded(
             flex: 5,
             child: Padding(
