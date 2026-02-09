@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentor_a/screen/register_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
 import 'package:mentor_a/widget/custom_button.dart';
 
@@ -57,7 +58,13 @@ class ChoiceScreen extends StatelessWidget {
                   CustomChoiceButton(
                     text: "Guru",
                     onPressed: () {
-                      print("Login sebagai Guru");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const RegisterScreen(role: "Guru"),
+                        ),
+                      );
                     },
                   ),
 
@@ -66,7 +73,13 @@ class ChoiceScreen extends StatelessWidget {
                   CustomChoiceButton(
                     text: "Murid",
                     onPressed: () {
-                      print("Login sebagai Murid");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const RegisterScreen(role: "Murid"),
+                        ),
+                      );
                     },
                   ),
                   const Spacer(flex: 1),
