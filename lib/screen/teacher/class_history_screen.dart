@@ -52,6 +52,7 @@ class ClassHistoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Riwayat Perkelas"),
         backgroundColor: CustomColor.backgroundColor,
+        surfaceTintColor: CustomColor.backgroundColor,
       ),
       body: ListView.builder(
         itemCount: history.length,
