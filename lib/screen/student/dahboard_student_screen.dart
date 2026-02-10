@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mentor_a/screen/student/history_student_screen.dart';
-import 'package:mentor_a/screen/student/notif_student_screen.dart';
+import 'package:mentor_a/screen/notif_screen.dart';
 import 'package:mentor_a/screen/student/progress_student_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
 

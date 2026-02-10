@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mentor_a/screen/choice_screen.dart';
+import 'package:mentor_a/screen/login_screen.dart';
 import 'package:mentor_a/screen/welcome_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
     bool isSetupDone = prefs.getBool('isProtected') ?? false;
 
     Widget targetScreen = isSetupDone
-        ? const ChoiceScreen()
+        ? const LoginScreen()
         : const WelcomeScreen();
 
     if (mounted) {
