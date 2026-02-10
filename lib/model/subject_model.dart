@@ -14,6 +14,7 @@ class Chapter {
   final String status;
   final String summary;
   final List<Quiz> quizzes;
+  final List<Exam> exams;
   final List<MaterialItem> items;
 
   Chapter({
@@ -23,6 +24,7 @@ class Chapter {
     this.summary = "",
     required this.items,
     this.quizzes = const [],
+    this.exams = const [],
   });
 }
 
@@ -44,28 +46,52 @@ class Quiz {
   final String title;
   final String date;
   final int questionCount;
-  String? selectedOption;
+  bool isCompleted;
+  final List<Question> questions;
 
   Quiz({
     required this.title,
     required this.date,
     required this.questionCount,
-    this.selectedOption,
+    required this.questions,
+    this.isCompleted = false,
+  });
+}
+
+class Exam {
+  final String title;
+  final DateTime date;
+  final String duration;
+  final String questionCountLabel;
+  bool isStarted;
+  bool isCompleted;
+  final List<Question> questions;
+
+  Exam({
+    required this.title,
+    required this.date,
+    required this.duration,
+    required this.questionCountLabel,
+    required this.questions,
+    this.isStarted = false,
+    this.isCompleted = false,
   });
 }
 
 class Question {
   final String id;
   final String questionText;
+  final String type;
   final List<String> options;
-  String? selectedOption;
   final String correctAnswer;
   final String explanation;
+  String? selectedOption;
 
   Question({
     required this.id,
     required this.questionText,
-    required this.options,
+    required this.type,
+    this.options = const [],
     required this.correctAnswer,
     required this.explanation,
     this.selectedOption,

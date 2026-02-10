@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_a/screen/student/quiz_question_student_screen.dart';
-
 import '../../model/subject_model.dart';
 import '../../style/custom_color.dart';
 
-class QuizStudentScreen extends StatelessWidget {
+class QuizStudentScreen extends StatefulWidget {
   final String chapterTitle;
   final List<Quiz> quizzes;
 
@@ -14,10 +13,25 @@ class QuizStudentScreen extends StatelessWidget {
     required this.quizzes,
   });
 
+  @override
+  State<QuizStudentScreen> createState() => _QuizStudentScreenState();
+}
+
+class _QuizStudentScreenState extends State<QuizStudentScreen> {
+  // Fungsi untuk memperbarui status kuis menjadi selesai
+  void _completeQuiz(Quiz quiz) {
+    setState(() {
+      quiz.isCompleted = true;
+    });
+  }
+
   void _showQuizDetail(BuildContext context, Quiz quiz) {
     showDialog(
       context: context,
-      builder: (context) => QuizDetailDialog(quiz: quiz),
+      builder: (context) => QuizDetailDialog(
+        quiz: quiz,
+        onStart: () => _completeQuiz(quiz), // Callback dikirim ke dialog
+      ),
     );
   }
 
@@ -44,7 +58,6 @@ class QuizStudentScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Search Bar
             TextField(
               decoration: InputDecoration(
                 hintText: "Cari Quiz...",
@@ -58,12 +71,14 @@ class QuizStudentScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // List Quiz
             Expanded(
               child: ListView.builder(
-                itemCount: quizzes.length,
+                itemCount: widget.quizzes.length,
                 itemBuilder: (context, index) {
-                  final quiz = quizzes[index];
+                  final quiz = widget.quizzes[index];
+                  // Cek apakah kuis sudah selesai
+                  bool isDone = quiz.isCompleted;
+
                   return Card(
                     color: CustomColor.backgroundColor,
                     margin: const EdgeInsets.only(bottom: 12),
@@ -71,26 +86,43 @@ class QuizStudentScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
-                      onTap: () => _showQuizDetail(context, quiz),
+                      // Jika sudah hijau (isDone), onTap menjadi null sehingga tidak bisa dipencet
+                      onTap: isDone
+                          ? null
+                          : () => _showQuizDetail(context, quiz),
                       leading: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8F0FE),
+                          // Berubah warna hijau jika selesai
+                          color: isDone
+                              ? const Color(0xFFE2F6E9)
+                              : const Color(0xFFE8F0FE),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.description_outlined,
-                          color: CustomColor.primaryColor,
+                          // Icon berubah warna hijau jika selesai
+                          color: isDone
+                              ? Colors.green
+                              : CustomColor.primaryColor,
                         ),
                       ),
                       title: Text(
-                        chapterTitle,
+                        widget.chapterTitle,
                         style: const TextStyle(fontWeight: FontWeight.normal),
                       ),
                       subtitle: Text(
                         quiz.title,
                         style: const TextStyle(color: Colors.grey),
                       ),
+                      // Tambahkan trailing centang jika sudah selesai untuk memperjelas UI
+                      trailing: isDone
+                          ? const Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                              size: 20,
+                            )
+                          : null,
                     ),
                   );
                 },
@@ -105,8 +137,13 @@ class QuizStudentScreen extends StatelessWidget {
 
 class QuizDetailDialog extends StatelessWidget {
   final Quiz quiz;
+  final VoidCallback onStart; // Parameter baru untuk callback
 
-  const QuizDetailDialog({super.key, required this.quiz});
+  const QuizDetailDialog({
+    super.key,
+    required this.quiz,
+    required this.onStart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -160,14 +197,12 @@ class QuizDetailDialog extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      onStart(); // Panggil callback untuk mengubah status kuis
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuizQuestionStudentScreen(
-                            quizTitle: quiz.title,
-                            // Jika kamu menggunakan list soal dinamis:
-                            // questions: quiz.questions,
-                          ),
+                          builder: (context) =>
+                              QuizQuestionStudentScreen(quizTitle: quiz.title),
                         ),
                       );
                     },

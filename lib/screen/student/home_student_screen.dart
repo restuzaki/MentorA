@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_a/screen/student/chatbot_student_screen.dart';
 import 'package:mentor_a/screen/student/dahboard_student_screen.dart';
+import 'package:mentor_a/screen/student/exam_student_screen.dart';
 import 'package:mentor_a/screen/student/subject_student_screen.dart';
 import '../../widget/student_bottom_nav.dart';
 
@@ -18,7 +19,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
   final List<Widget> _pages = [
     const DahboardStudentScreen(),
     const SubjectStudentScreen(),
-    const Center(child: Text('Halaman Ulangan')),
+    const ExamStudentScreen(),
     ChatbotStudentScreen(),
     const Center(child: Text('Halaman Profil')),
   ];

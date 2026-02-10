@@ -27,11 +27,13 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
             title: "Quiz 1 - Persamaan Linear 1",
             date: "01/03/2026",
             questionCount: 3,
+            questions: [],
           ),
           Quiz(
             title: "Quiz 2 - Persamaan Linear 1",
             date: "05/03/2026",
             questionCount: 5,
+            questions: [],
           ),
         ],
         items: [
@@ -63,11 +65,13 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
             title: "Quiz 1 - Persamaan Linear 1",
             date: "01/03/2026",
             questionCount: 3,
+            questions: [],
           ),
           Quiz(
             title: "Quiz 2 - Persamaan Linear 1",
             date: "05/03/2026",
             questionCount: 5,
+            questions: [],
           ),
         ],
         summary:
@@ -95,11 +99,13 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
             title: "Quiz 1 - Persamaan Linear 1",
             date: "01/03/2026",
             questionCount: 3,
+            questions: [],
           ),
           Quiz(
             title: "Quiz 2 - Persamaan Linear 1",
             date: "05/03/2026",
             questionCount: 5,
+            questions: [],
           ),
         ],
         items: [
@@ -131,11 +137,13 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
             title: "Quiz 1 - Persamaan Linear 1",
             date: "01/03/2026",
             questionCount: 3,
+            questions: [],
           ),
           Quiz(
             title: "Quiz 2 - Persamaan Linear 1",
             date: "05/03/2026",
             questionCount: 5,
+            questions: [],
           ),
         ],
         items: [
@@ -167,11 +175,13 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
             title: "Quiz 1 - Persamaan Linear 1",
             date: "01/03/2026",
             questionCount: 3,
+            questions: [],
           ),
           Quiz(
             title: "Quiz 2 - Persamaan Linear 1",
             date: "05/03/2026",
             questionCount: 5,
+            questions: [],
           ),
         ],
         items: [
