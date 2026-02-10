@@ -24,6 +24,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
       correctAnswer: "B. 4",
       explanation:
           "Cara: 2x + 6 = 14\nKurangi 6 di kedua ruas: 2x = 8\nBagi 2: x = 4",
+      type: 'Pilihan Ganda',
     ),
     Question(
       id: "2",
@@ -32,6 +33,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
       correctAnswer: "B. 2",
       explanation:
           "Cara: 5x - 10 = 0\nKurangi 10 di kedua ruas: 5x = 10\nBagi 5: x = 2",
+      type: 'Pilihan Ganda',
     ),
     Question(
       id: "3",
@@ -39,6 +41,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
       options: ["A. 3", "B. 4", "C. 5", "D. 6"],
       correctAnswer: "C. 5",
       explanation: "Cara: x + 7 = 12\nKurangi 7 di kedua ruas: x = 5",
+      type: 'Pilihan Ganda',
     ),
   ];
 
@@ -77,6 +80,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
+                      backgroundColor: CustomColor.backgroundColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -210,7 +214,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
