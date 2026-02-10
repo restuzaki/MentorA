@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mentor_a/model/class_history_model.dart';
 import 'package:mentor_a/screen/notif_screen.dart';
-import 'package:mentor_a/screen/teacher/class_detail_screen.dart';
+import 'package:mentor_a/screen/teacher/class_history_detail_screen.dart';
 import 'package:mentor_a/screen/teacher/class_history_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
 import 'package:mentor_a/widget/class_history_card.dart';
@@ -108,7 +108,7 @@ class DashboardTeacherScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            _buildClassHistoryList(history),
+            _buildClassHistoryList(context, history),
           ],
         ),
       ),
@@ -376,7 +376,8 @@ class DashboardTeacherScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildClassHistoryList(List<ClassHistoryModel> history) {
+  Widget _buildClassHistoryList(
+      BuildContext context, List<ClassHistoryModel> history) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -384,14 +385,20 @@ class DashboardTeacherScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = history[index];
         return ClassHistoryCard(
-          className: item.className,
-          subject: item.subject,
-          studentCount: item.studentCount,
-          averageScore: item.averageScore,
-          lastUpdate: item.lastUpdate,
-          percentageChange: item.percentageChange,
-          isIncrease: item.isIncrease,
-          color: CustomColor.primaryColor,
+          model: item,
+          color: item.subject == "Matematika"
+              ? CustomColor.primaryColor
+              : item.subject == "Fisika"
+                  ? Colors.green
+                  : Colors.purple,
+          onClick: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ClassDetailScreen(classHistory: item),
+              ),
+            );
+          },
         );
       },
     );
