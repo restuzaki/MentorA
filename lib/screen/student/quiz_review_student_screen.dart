@@ -44,7 +44,7 @@ class QuizReviewScreen extends StatelessWidget {
           // List Soal & Penjelasan (Image f505ad)
           ...questions.asMap().entries.map((entry) {
             return _buildReviewCard(entry.value, entry.key + 1);
-          }).toList(),
+          }),
         ],
       ),
     );
