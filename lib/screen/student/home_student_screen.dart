@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_a/screen/student/chatbot_student_screen.dart';
 import 'package:mentor_a/screen/student/dahboard_student_screen.dart';
+import 'package:mentor_a/screen/student/subject_student_screen.dart';
 import '../../widget/student_bottom_nav.dart';
 
 class HomeStudentScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomeStudentScreenState extends State<HomeStudentScreen> {
 
   final List<Widget> _pages = [
     const DahboardStudentScreen(),
-    const Center(child: Text('Halaman Belajar')),
+    const SubjectStudentScreen(),
     const Center(child: Text('Halaman Ulangan')),
     ChatbotStudentScreen(),
     const Center(child: Text('Halaman Profil')),
