@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mentor_a/model/teacher_material_model.dart';
 import 'package:mentor_a/screen/teacher/student_list_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
@@ -52,6 +53,19 @@ class _AddSubjectTeacherScreenState extends State<AddSubjectTeacherScreen> {
 
   // ── Helpers ──
   bool get _isEditing => _editingIndex != null;
+
+  void _shareLink() async {
+    const placeholderLink = 'https://mentora.app/invite/class-12345';
+    await Clipboard.setData(const ClipboardData(text: placeholderLink));
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Link berhasil disalin ke clipboard'),
+        backgroundColor: CustomColor.successGreen,
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -394,7 +408,7 @@ class _AddSubjectTeacherScreenState extends State<AddSubjectTeacherScreen> {
       studentCount: 0,
       onViewList: _navigateToStudentList,
       onInvite: () {
-        _showSnackBar('Fitur undangan segera hadir');
+        _shareLink();
       },
     );
   }
