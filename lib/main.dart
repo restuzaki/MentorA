@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mentor_a/screen/splash_secreen.dart';
 import 'package:mentor_a/screen/student/home_student_screen.dart';
+import 'package:mentor_a/screen/teacher/home_teacher_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       locale: Locale('id', 'ID'),
-      home: const HomeStudentScreen(),
+      home: const HomeTeacherScreen(),
     );
   }
 }

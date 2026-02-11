@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentor_a/screen/choice_screen.dart';
 import 'package:mentor_a/widget/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -96,7 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: const Color(0xFF447DDA),
               textColor: Colors.white,
               onPressed: () {
-                // print("Proses Login...");
+                // TODO(Handle Login logic here)
+                // TODO(Check Role to navigate to the correct screen)
               },
             ),
             const SizedBox(height: 25),
@@ -108,7 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Belum memiliki akun? "),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChoiceScreen()
+                        ),
+                      );
                     },
                     child: const Text(
                       "Daftar sekarang",
