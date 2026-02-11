@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:mentor_a/screen/student/subject_detail_student_screen.dart";
 import "package:mentor_a/style/custom_color.dart";
 import "package:mentor_a/widget/custom_action_button.dart";
+import "package:mentor_a/widget/subject_card.dart";
+import "package:mentor_a/widget/subject_search_bar.dart";
 
 import "../../model/subject_model.dart";
 
@@ -238,48 +240,16 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
-                    decoration: InputDecoration(
-                      hintText: "Cari mata pelajaran atau kelas...",
-                      prefixIcon: const Icon(Icons.search, size: 20),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                GestureDetector(
-                  onTap: _showAddClassDialog,
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: CustomColor.primaryColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(Icons.add, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
+            SubjectSearchBar(onAddPressed: _showAddClassDialog),
             const SizedBox(height: 20),
             // List Mata Pelajaran
             Expanded(
               child: ListView.builder(
                 itemCount: subjects.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return SubjectCard(
+                    title: subjects[index].name,
+                    subtitle: subjects[index].grade,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -290,41 +260,6 @@ class _SubjectStudentScreenState extends State<SubjectStudentScreen> {
                         ),
                       );
                     },
-                    child: Card(
-                      color: CustomColor.backgroundColor,
-                      shadowColor: Colors.grey,
-                      elevation: 0.5,
-                      margin: const EdgeInsets.only(bottom: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(color: Colors.grey.shade200),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        leading: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFE8F0FE),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(
-                            Icons.book_outlined,
-                            color: CustomColor.primaryColor,
-                          ),
-                        ),
-                        title: Text(
-                          subjects[index].name,
-                          style: const TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Text(
-                          subjects[index].grade,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    ),
                   );
                 },
               ),
