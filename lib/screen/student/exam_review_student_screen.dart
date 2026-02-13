@@ -33,16 +33,10 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
   @override
   Widget build(BuildContext context) {
     int correctCount = widget.questions
-        .where(
-          (q) =>
-              q.type == "Pilihan Ganda" && q.selectedOption == q.correctAnswer,
-        )
+        .where((q) => q.isMultipleChoice && q.selectedOption == q.correctAnswer)
         .length;
     int wrongCount = widget.questions
-        .where(
-          (q) =>
-              q.type == "Pilihan Ganda" && q.selectedOption != q.correctAnswer,
-        )
+        .where((q) => q.isMultipleChoice && q.selectedOption != q.correctAnswer)
         .length;
 
     return Scaffold(
@@ -155,7 +149,7 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
   }
 
   Widget _buildReviewCard(Question question, int number) {
-    bool isEssay = question.type == "Essay";
+    bool isEssay = question.isEssay;
     bool isCorrect =
         !isEssay && (question.selectedOption == question.correctAnswer);
     Color themeColor = isEssay
@@ -196,7 +190,7 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
                     ),
                     const SizedBox(width: 8),
                     _buildTag(
-                      question.type,
+                      question.type.displayName,
                       Colors.grey.shade100,
                       Colors.grey.shade600,
                     ),

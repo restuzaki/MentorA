@@ -20,28 +20,43 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
     Question(
       id: "1",
       questionText: "Tentukan nilai x dari persamaan berikut:\n2x + 6 = 14",
-      options: ["A. 3", "B. 4", "C. 5", "D. 6"],
-      correctAnswer: "B. 4",
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '3'),
+        AnswerOption(id: 'B', label: 'B', text: '4'),
+        AnswerOption(id: 'C', label: 'C', text: '5'),
+        AnswerOption(id: 'D', label: 'D', text: '6'),
+      ],
+      correctAnswer: "B",
       explanation:
           "Cara: 2x + 6 = 14\nKurangi 6 di kedua ruas: 2x = 8\nBagi 2: x = 4",
-      type: 'Pilihan Ganda',
+      type: QuestionType.multipleChoice,
     ),
     Question(
       id: "2",
       questionText: "Tentukan nilai x dari persamaan berikut:\n5x - 10 = 0",
-      options: ["A. 1", "B. 2", "C. 3", "D. 4"],
-      correctAnswer: "B. 2",
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '1'),
+        AnswerOption(id: 'B', label: 'B', text: '2'),
+        AnswerOption(id: 'C', label: 'C', text: '3'),
+        AnswerOption(id: 'D', label: 'D', text: '4'),
+      ],
+      correctAnswer: "B",
       explanation:
           "Cara: 5x - 10 = 0\nKurangi 10 di kedua ruas: 5x = 10\nBagi 5: x = 2",
-      type: 'Pilihan Ganda',
+      type: QuestionType.multipleChoice,
     ),
     Question(
       id: "3",
       questionText: "Tentukan nilai x dari persamaan berikut:\nx + 7 = 12",
-      options: ["A. 3", "B. 4", "C. 5", "D. 6"],
-      correctAnswer: "C. 5",
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '3'),
+        AnswerOption(id: 'B', label: 'B', text: '4'),
+        AnswerOption(id: 'C', label: 'C', text: '5'),
+        AnswerOption(id: 'D', label: 'D', text: '6'),
+      ],
+      correctAnswer: "C",
       explanation: "Cara: x + 7 = 12\nKurangi 7 di kedua ruas: x = 5",
-      type: 'Pilihan Ganda',
+      type: QuestionType.multipleChoice,
     ),
   ];
 
@@ -173,13 +188,13 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
           const SizedBox(height: 12),
           // Loop pilihan jawaban
           ...question.options.map((option) {
-            bool isSelected = question.selectedOption == option;
+            bool isSelected = question.selectedOption == option.id;
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    question.selectedOption = option;
+                    question.selectedOption = option.id;
                   });
                 },
                 child: Container(
@@ -201,7 +216,7 @@ class _QuizQuestionStudentScreenState extends State<QuizQuestionStudentScreen> {
                     ),
                   ),
                   child: Text(
-                    option,
+                    '${option.label}. ${option.text}',
                     style: TextStyle(
                       color: isSelected
                           ? CustomColor.primaryColor
