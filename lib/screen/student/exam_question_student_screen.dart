@@ -20,32 +20,47 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
     Question(
       id: "1",
       questionText: "Tentukan nilai x dari persamaan berikut:\n2x + 6 = 14",
-      type: "Pilihan Ganda",
-      options: ["A. 3", "B. 4", "C. 5", "D. 6"],
-      correctAnswer: "B. 4",
+      type: QuestionType.multipleChoice,
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '3'),
+        AnswerOption(id: 'B', label: 'B', text: '4'),
+        AnswerOption(id: 'C', label: 'C', text: '5'),
+        AnswerOption(id: 'D', label: 'D', text: '6'),
+      ],
+      correctAnswer: "B",
       explanation:
           "2x = 14 - 6 => 2x = 8. Kemudian bagi dengan 2: x = 8 / 2 = 4.",
     ),
     Question(
       id: "2",
       questionText: "Tentukan nilai x dari persamaan berikut:\n5x - 10 = 0",
-      type: "Pilihan Ganda",
-      options: ["A. 1", "B. 2", "C. 3", "D. 4"],
-      correctAnswer: "B. 2",
+      type: QuestionType.multipleChoice,
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '1'),
+        AnswerOption(id: 'B', label: 'B', text: '2'),
+        AnswerOption(id: 'C', label: 'C', text: '3'),
+        AnswerOption(id: 'D', label: 'D', text: '4'),
+      ],
+      correctAnswer: "B",
       explanation: "5x = 10. Kemudian bagi dengan 5: x = 10 / 5 = 2.",
     ),
     Question(
       id: "3",
       questionText: "Tentukan nilai x dari persamaan berikut:\nx + 7 = 12",
-      type: "Pilihan Ganda",
-      options: ["A. 3", "B. 4", "C. 5", "D. 6"],
-      correctAnswer: "C. 5",
+      type: QuestionType.multipleChoice,
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '3'),
+        AnswerOption(id: 'B', label: 'B', text: '4'),
+        AnswerOption(id: 'C', label: 'C', text: '5'),
+        AnswerOption(id: 'D', label: 'D', text: '6'),
+      ],
+      correctAnswer: "C",
       explanation: "x = 12 - 7. Hasilnya adalah x = 5.",
     ),
     Question(
       id: "4",
       questionText: "Tentukan nilai x dari persamaan berikut:\n5x - 10 = 0",
-      type: "Essay",
+      type: QuestionType.essay,
       options: [],
       correctAnswer: "2",
       explanation: "5x = 10, sehingga x = 2.",
@@ -53,7 +68,7 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
     Question(
       id: "5",
       questionText: "Tentukan nilai x dari persamaan berikut:\nx + 7 = 12",
-      type: "Essay",
+      type: QuestionType.essay,
       options: [],
       correctAnswer: "5",
       explanation: "x = 12 - 7. Maka nilai x adalah 5.",
@@ -61,15 +76,20 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
     Question(
       id: "6",
       questionText: "Tentukan nilai x dari persamaan berikut:\n3x - 9 = 6",
-      type: "Pilihan Ganda",
-      options: ["A. 3", "B. 5", "C. 7", "D. 9"],
-      correctAnswer: "B. 5",
+      type: QuestionType.multipleChoice,
+      options: [
+        AnswerOption(id: 'A', label: 'A', text: '3'),
+        AnswerOption(id: 'B', label: 'B', text: '5'),
+        AnswerOption(id: 'C', label: 'C', text: '7'),
+        AnswerOption(id: 'D', label: 'D', text: '9'),
+      ],
+      correctAnswer: "B",
       explanation: "3x = 15. Maka x = 5.",
     ),
     Question(
       id: "7",
       questionText: "Berapakah nilai x jika 4x = 20?",
-      type: "Essay",
+      type: QuestionType.essay,
       options: [],
       correctAnswer: "5",
       explanation: "x = 20 / 4 = 5.",
@@ -248,7 +268,7 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
   }
 
   Widget _buildQuestionCard(Question question, int number) {
-    bool isEssay = question.type == "Essay";
+    bool isEssay = question.isEssay;
     if (isEssay && !_controllers.containsKey(question.id)) {
       _controllers[question.id] = TextEditingController(
         text: question.selectedOption,
@@ -274,7 +294,11 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
                 const Color(0xFF4A89DC),
               ),
               const SizedBox(width: 8),
-              _buildTag(question.type, Colors.grey.shade100, Colors.grey),
+              _buildTag(
+                question.type.displayName,
+                Colors.grey.shade100,
+                Colors.grey,
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -285,7 +309,12 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
           const SizedBox(height: 16),
           if (!isEssay)
             ...question.options.map(
-              (option) => _buildOptionTile(question, option),
+              (option) => _buildOptionTile(
+                question,
+                option.id,
+                option.label,
+                option.text,
+              ),
             )
           else
             TextField(
@@ -303,10 +332,15 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
     );
   }
 
-  Widget _buildOptionTile(Question question, String option) {
-    bool isSelected = question.selectedOption == option;
+  Widget _buildOptionTile(
+    Question question,
+    String optionId,
+    String label,
+    String text,
+  ) {
+    bool isSelected = question.selectedOption == optionId;
     return GestureDetector(
-      onTap: () => setState(() => question.selectedOption = option),
+      onTap: () => setState(() => question.selectedOption = optionId),
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 10),
@@ -319,7 +353,7 @@ class _ExamQuestionStudentScreenState extends State<ExamQuestionStudentScreen> {
           ),
         ),
         child: Text(
-          option,
+          '$label. $text',
           style: TextStyle(
             color: isSelected ? const Color(0xFF4A89DC) : Colors.black87,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

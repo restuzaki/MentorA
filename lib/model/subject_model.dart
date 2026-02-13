@@ -59,31 +59,40 @@ class Quiz {
 }
 
 class Exam {
+  final String id;
   final String title;
   final DateTime date;
-  final String duration;
-  final String questionCountLabel;
+  final int duration; // in minutes
+  final int questionCount;
+  final String? subjectName;
+  final String? className;
   bool isStarted;
   bool isCompleted;
   final List<Question> questions;
 
   Exam({
+    required this.id,
     required this.title,
     required this.date,
     required this.duration,
-    required this.questionCountLabel,
+    required this.questionCount,
+    this.subjectName,
+    this.className,
     required this.questions,
     this.isStarted = false,
     this.isCompleted = false,
   });
+
+  String get durationLabel => '$duration menit';
+  String get questionCountLabel => '$questionCount Soal';
 }
 
 class Question {
   final String id;
   final String questionText;
-  final String type;
-  final List<String> options;
-  final String correctAnswer;
+  final QuestionType type;
+  final List<AnswerOption> options; // For multiple choice
+  final String correctAnswer; // For essay or option ID for multiple choice
   final String explanation;
   String? selectedOption;
 
@@ -93,7 +102,32 @@ class Question {
     required this.type,
     this.options = const [],
     required this.correctAnswer,
-    required this.explanation,
+    this.explanation = '',
     this.selectedOption,
   });
+
+  bool get isMultipleChoice => type == QuestionType.multipleChoice;
+  bool get isEssay => type == QuestionType.essay;
+}
+
+enum QuestionType {
+  essay,
+  multipleChoice;
+
+  String get displayName {
+    switch (this) {
+      case QuestionType.essay:
+        return 'Essay';
+      case QuestionType.multipleChoice:
+        return 'Pilihan Ganda';
+    }
+  }
+}
+
+class AnswerOption {
+  final String id;
+  final String label; // A, B, C, D
+  final String text;
+
+  AnswerOption({required this.id, required this.label, required this.text});
 }

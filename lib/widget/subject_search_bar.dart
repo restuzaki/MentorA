@@ -6,11 +6,13 @@ import 'package:mentor_a/style/custom_color.dart';
 class SubjectSearchBar extends StatelessWidget {
   final String hintText;
   final VoidCallback onAddPressed;
+  final TextEditingController? searchController;
 
   const SubjectSearchBar({
     super.key,
     this.hintText = "Cari mata pelajaran atau kelas...",
     required this.onAddPressed,
+    this.searchController,
   });
 
   @override
@@ -19,6 +21,7 @@ class SubjectSearchBar extends StatelessWidget {
       children: [
         Expanded(
           child: TextField(
+            controller: searchController,
             style: const TextStyle(fontSize: 12, color: Colors.grey),
             decoration: InputDecoration(
               hintText: hintText,
