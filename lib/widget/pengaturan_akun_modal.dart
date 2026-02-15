@@ -63,7 +63,7 @@ class _PengaturanAkunModalState extends State<PengaturanAkunModal> {
                 ),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<String>(
-                  value: _selectedLanguage,
+                  initialValue: _selectedLanguage,
                   decoration: InputDecoration(
                     filled: false,
                     enabledBorder: OutlineInputBorder(
@@ -146,7 +146,7 @@ class _PengaturanAkunModalState extends State<PengaturanAkunModal> {
                           _emailNotifications = value;
                         });
                       },
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: CustomColor.primaryColor,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: CustomColor.borderGrey,
@@ -191,7 +191,7 @@ class _PengaturanAkunModalState extends State<PengaturanAkunModal> {
                           _pushNotifications = value;
                         });
                       },
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: CustomColor.primaryColor,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: CustomColor.borderGrey,
