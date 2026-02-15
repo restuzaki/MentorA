@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_a/model/subject_model.dart';
 import 'package:mentor_a/screen/teacher/create_exam_screen.dart';
+import 'package:mentor_a/screen/teacher/student_grade_screen.dart';
 import 'package:mentor_a/style/custom_color.dart';
 import 'package:mentor_a/widget/delete_confirmation_dialog.dart';
 import 'package:mentor_a/widget/exam_card.dart';
@@ -137,11 +138,16 @@ class _ExamListScreenState extends State<ExamListScreen> {
   }
 
   void _showExamNilai(Exam exam) {
-    // Navigate to exam scores/grades screen (placeholder)
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fitur Nilai akan segera hadir'),
-        backgroundColor: CustomColor.primaryColor,
+    // Navigate to student grades screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudentGradeScreen(
+          examTitle: exam.title,
+          examId: exam.id,
+          subjectName: widget.subjectName,
+          className: widget.className,
+        ),
       ),
     );
   }
