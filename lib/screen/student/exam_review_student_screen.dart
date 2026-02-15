@@ -167,7 +167,7 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
         border: Border(left: BorderSide(color: themeColor, width: 6)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -185,7 +185,7 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
                   children: [
                     _buildTag(
                       "Soal $number",
-                      themeColor.withOpacity(0.1),
+                      themeColor.withValues(alpha: 0.1),
                       themeColor,
                     ),
                     const SizedBox(width: 8),
@@ -198,7 +198,7 @@ class _ExamReviewScreenState extends State<ExamReviewScreen> {
                 ),
                 _buildTag(
                   isEssay ? "0 poin" : "4 poin",
-                  themeColor.withOpacity(0.1),
+                  themeColor.withValues(alpha: 0.1),
                   themeColor,
                 ),
               ],

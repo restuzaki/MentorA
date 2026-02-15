@@ -397,10 +397,11 @@ class _CreateExamScreenState extends State<CreateExamScreen>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
         if (_hasUnsavedChanges || _isShowingForm) {
-          final shouldPop = await showDialog<bool>(
+          didPop = await showDialog<bool>(
             context: context,
             builder: (context) => AlertDialog(
               title: const Text('Keluar Tanpa Menyimpan?'),
@@ -421,10 +422,12 @@ class _CreateExamScreenState extends State<CreateExamScreen>
                 ),
               ],
             ),
-          );
-          return shouldPop ?? false;
+          ) ?? false;
+
+          if (didPop) {
+            return;
+          }
         }
-        return true;
       },
       child: Scaffold(
         backgroundColor: CustomColor.backgroundColor,

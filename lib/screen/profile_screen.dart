@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '/model/teacher_model.dart';
 import '/style/custom_color.dart';
+import '/widget/edit_profile_modal.dart';
+import '/widget/keamanan_modal.dart';
+import '/widget/pengaturan_akun_modal.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -26,19 +29,25 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: CustomColor.backgroundColor,
         surfaceTintColor: CustomColor.backgroundColor,
-        title: const Text('Profile', style: TextStyle(color: CustomColor.textBlack, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            color: CustomColor.textBlack,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildProfileHeader(teacher),
+          _buildProfileHeader(teacher, context),
           const SizedBox(height: 24.0),
           _buildStatistics(teacher),
           const SizedBox(height: 24.0),
           _buildContactInfo(teacher),
           const SizedBox(height: 24.0),
-          _buildSettings(),
+          _buildSettings(context),
           const SizedBox(height: 24.0),
           _buildLogoutButton(),
         ],
@@ -46,11 +55,9 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileHeader(Teacher teacher) {
+  Widget _buildProfileHeader(Teacher teacher, BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 2,
       shadowColor: CustomColor.textBlack.withValues(alpha: 0.2),
       color: CustomColor.backgroundColor,
@@ -64,22 +71,58 @@ class ProfileScreen extends StatelessWidget {
               child: Icon(Icons.person, color: Colors.white, size: 48),
             ),
             const SizedBox(height: 16.0),
-            Text(teacher.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: CustomColor.textBlack)),
+            Text(
+              teacher.name,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: CustomColor.textBlack,
+              ),
+            ),
             const SizedBox(height: 4.0),
-            Text(teacher.subject, style: TextStyle(color: CustomColor.textBlack.withValues(alpha: 0.6), fontSize: 14)),
+            Text(
+              teacher.subject,
+              style: TextStyle(
+                color: CustomColor.textBlack.withValues(alpha: 0.6),
+                fontSize: 14,
+              ),
+            ),
             const SizedBox(height: 24.0),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => EditProfileModal(
+                    currentName: teacher.name,
+                    currentEmail: teacher.email,
+                    currentPhone: teacher.phoneNumber,
+                    currentSchool: teacher.school,
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: CustomColor.accentColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
               ),
-              icon: const Icon(Icons.edit, color: CustomColor.primaryColor, size: 16),
-              label: const Text('Edit Profile', style: TextStyle(color: CustomColor.primaryColor, fontWeight: FontWeight.bold)),
+              icon: const Icon(
+                Icons.edit,
+                color: CustomColor.primaryColor,
+                size: 16,
+              ),
+              label: const Text(
+                'Edit Profile',
+                style: TextStyle(
+                  color: CustomColor.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -89,9 +132,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildStatistics(Teacher teacher) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 2,
       shadowColor: CustomColor.textBlack.withValues(alpha: 0.2),
       color: Colors.white,
@@ -100,21 +141,52 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Statistik', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColor.textBlack)),
+            const Text(
+              'Statistik',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: CustomColor.textBlack,
+              ),
+            ),
             const SizedBox(height: 16.0),
             Row(
               children: [
-                Expanded(child: _buildStatItem('assets/icons/book.png', '${teacher.numberOfClasses}', 'Kelas')),
+                Expanded(
+                  child: _buildStatItem(
+                    'assets/icons/book.png',
+                    '${teacher.numberOfClasses}',
+                    'Kelas',
+                  ),
+                ),
                 const SizedBox(width: 16),
-                Expanded(child: _buildStatItem('assets/icons/exam.png', '${teacher.numberOfExams}', 'Ulangan')),
+                Expanded(
+                  child: _buildStatItem(
+                    'assets/icons/exam.png',
+                    '${teacher.numberOfExams}',
+                    'Ulangan',
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16.0),
             Row(
               children: [
-                Expanded(child: _buildStatItem('assets/icons/profile.png', '${teacher.numberOfStudents}', 'Murid')),
+                Expanded(
+                  child: _buildStatItem(
+                    'assets/icons/profile.png',
+                    '${teacher.numberOfStudents}',
+                    'Murid',
+                  ),
+                ),
                 const SizedBox(width: 16),
-                Expanded(child: _buildStatItem('assets/icons/exam.png', '${teacher.numberOfQuestions}', 'Soal')),
+                Expanded(
+                  child: _buildStatItem(
+                    'assets/icons/exam.png',
+                    '${teacher.numberOfQuestions}',
+                    'Soal',
+                  ),
+                ),
               ],
             ),
           ],
@@ -127,15 +199,34 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.circular(12)),
+        color: const Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
         children: [
-          Image.asset(iconPath, width: 20, height: 20, color: CustomColor.primaryColor),
+          Image.asset(
+            iconPath,
+            width: 20,
+            height: 20,
+            color: CustomColor.primaryColor,
+          ),
           const SizedBox(height: 8.0),
-          Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColor.textBlack)),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: CustomColor.textBlack,
+            ),
+          ),
           const SizedBox(height: 2.0),
-          Text(label, style: TextStyle(color: CustomColor.textBlack.withValues(alpha: 0.6), fontSize: 12)),
+          Text(
+            label,
+            style: TextStyle(
+              color: CustomColor.textBlack.withValues(alpha: 0.6),
+              fontSize: 12,
+            ),
+          ),
         ],
       ),
     );
@@ -143,9 +234,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildContactInfo(Teacher teacher) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 2,
       shadowColor: CustomColor.textBlack.withValues(alpha: 0.2),
       color: Colors.white,
@@ -154,15 +243,30 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Informasi Kontak', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColor.textBlack)),
+            const Text(
+              'Informasi Kontak',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: CustomColor.textBlack,
+              ),
+            ),
             const SizedBox(height: 8.0),
             _buildContactRow(Icons.email_outlined, 'Email', teacher.email),
             const Divider(height: 24, thickness: 0.5),
-            _buildContactRow(Icons.phone_outlined, 'No. Telepon', teacher.phoneNumber),
+            _buildContactRow(
+              Icons.phone_outlined,
+              'No. Telepon',
+              teacher.phoneNumber,
+            ),
             const Divider(height: 24, thickness: 0.5),
             _buildContactRow(Icons.school_outlined, 'Sekolah', teacher.school),
             const Divider(height: 24, thickness: 0.5),
-            _buildContactRow(Icons.calendar_today_outlined, 'Bergabung Sejak', teacher.joinDate),
+            _buildContactRow(
+              Icons.calendar_today_outlined,
+              'Bergabung Sejak',
+              teacher.joinDate,
+            ),
           ],
         ),
       ),
@@ -177,17 +281,35 @@ class ProfileScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, size: 22, color: CustomColor.textBlack.withValues(alpha: 0.7)),
+              color: const Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              icon,
+              size: 22,
+              color: CustomColor.textBlack.withValues(alpha: 0.7),
+            ),
           ),
           const SizedBox(width: 16.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: TextStyle(color: CustomColor.textBlack.withValues(alpha: 0.6), fontSize: 12)),
+              Text(
+                label,
+                style: TextStyle(
+                  color: CustomColor.textBlack.withValues(alpha: 0.6),
+                  fontSize: 12,
+                ),
+              ),
               const SizedBox(height: 2.0),
-              Text(value, style: const TextStyle(fontWeight: FontWeight.bold, color: CustomColor.textBlack, fontSize: 14)),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: CustomColor.textBlack,
+                  fontSize: 14,
+                ),
+              ),
             ],
           ),
         ],
@@ -195,11 +317,9 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettings() {
+  Widget _buildSettings(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 2,
       shadowColor: CustomColor.textBlack.withValues(alpha: 0.2),
       color: Colors.white,
@@ -208,32 +328,69 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Pengaturan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColor.textBlack)),
+            const Text(
+              'Pengaturan',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: CustomColor.textBlack,
+              ),
+            ),
             const SizedBox(height: 8.0),
-            _buildSettingItem(Icons.settings_outlined, 'Pengaturan Akun'),
+            _buildSettingItem(
+              Icons.settings_outlined,
+              'Pengaturan Akun',
+              context,
+            ),
             const Divider(height: 16, thickness: 0.5),
-            _buildSettingItem(Icons.security_outlined, 'Keamanan'),
+            _buildSettingItem(Icons.security_outlined, 'Keamanan', context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSettingItem(IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: CustomColor.textBlack.withValues(alpha: 0.7)),
-              const SizedBox(width: 16.0),
-              Text(title, style: const TextStyle(color: CustomColor.textBlack, fontWeight: FontWeight.bold, fontSize: 14)),
-            ],
-          ),
-          Icon(Icons.arrow_forward_ios, color: CustomColor.textBlack.withValues(alpha: 0.6), size: 16),
-        ],
+  Widget _buildSettingItem(IconData icon, String title, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (title == 'Pengaturan Akun') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => const PengaturanAkunModal(),
+          );
+        } else if (title == 'Keamanan') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => const KeamananModal(),
+          );
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: CustomColor.textBlack.withValues(alpha: 0.7)),
+                const SizedBox(width: 16.0),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: CustomColor.textBlack,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: CustomColor.textBlack.withValues(alpha: 0.6),
+              size: 16,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -249,7 +406,10 @@ class ProfileScreen extends StatelessWidget {
       color: Colors.transparent,
       child: ListTile(
         leading: const Icon(Icons.logout, color: logoutColor),
-        title: const Text('Keluar', style: TextStyle(color: logoutColor, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Keluar',
+          style: TextStyle(color: logoutColor, fontWeight: FontWeight.bold),
+        ),
         onTap: () {},
       ),
     );
